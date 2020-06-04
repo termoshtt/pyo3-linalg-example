@@ -1,7 +1,5 @@
 # pyo3-linalg-example
 
-![Rust](https://github.com/termoshtt/pyo3-linalg-example/workflows/Rust/badge.svg)
-
 Example for using [ndaray-linalg][linalg] with [PyO3][], and packaging using [maturin][] into wheel
 
 [linalg]: https://github.com/rust-ndarray/ndarray-linalg
