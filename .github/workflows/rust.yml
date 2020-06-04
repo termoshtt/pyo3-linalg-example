@@ -35,6 +35,5 @@ jobs:
 
       - name: Test
         run: |
-          CP3=cp3${{ matrix.minor-version }}
-          python -m pip install target/wheels/pyo3_linalg_example-0.1.0-${CP3}-${CP3}-linux_x86_64.whl
+          python -m pip install $(find target/wheels -name "*cp3${{ matrix.minor-version }}*.whl")
           python -c "import pyo3_linalg_example"
