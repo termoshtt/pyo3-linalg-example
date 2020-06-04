@@ -4,7 +4,7 @@ use numpy::{IntoPyArray, PyArrayDyn};
 use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
 
 #[pymodule]
-fn rust_ext(_py: Python, m: &PyModule) -> PyResult<()> {
+fn pyo3_linalg_example(_py: Python, m: &PyModule) -> PyResult<()> {
     // immutable example
     fn axpy(a: f64, x: ArrayViewD<f64>, y: ArrayViewD<f64>) -> ArrayD<f64> {
         a * &x + &y
