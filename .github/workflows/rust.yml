@@ -2,21 +2,19 @@ name: Rust
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master
+  pull_request: {}
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
+    - name: install gfortran
+      run: sudo apt update && sudo apt install -y gfortran
     - name: Run tests
       run: cargo test --verbose
