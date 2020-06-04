@@ -23,6 +23,16 @@ jobs:
     - name: Build wheel
       run: maturin build --manylinux=off
 
+    - name: Load test on Python3.6
+      run: |
+        pip3.6 install target/wheels/pyo3_linalg_example-0.1.0-cp36-cp36-linux_x86_64.whl
+        python3.6 -c "import pyo3_linalg_example"
+
+    - name: Load test on Python3.7
+      run: |
+        pip3.7 install target/wheels/pyo3_linalg_example-0.1.0-cp37-cp37-linux_x86_64.whl
+        python3.7 -c "import pyo3_linalg_example"
+
     - uses: actions/upload-artifact@v2
       with:
         name: wheels
