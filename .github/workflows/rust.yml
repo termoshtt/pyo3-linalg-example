@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+
     - name: install gfortran
       run: sudo apt update && sudo apt install -y gfortran
+
     - name: install maturin
       run: |
         pip3 install maturin
@@ -20,3 +22,8 @@ jobs:
         echo "::add-path::$HOME/.local/bin"
     - name: Build wheel
       run: maturin build --manylinux=off
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: wheels
+        path: target/wheels/*.whl
