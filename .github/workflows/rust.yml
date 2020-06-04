@@ -20,10 +20,18 @@ jobs:
         pip3 install maturin
         pip3 show maturin
         echo "::add-path::$HOME/.local/bin"
+
     - name: Build wheel
       run: maturin build --manylinux=off
 
     - uses: actions/upload-artifact@v2
+      name: "Artifact for Python 3.6"
       with:
-        name: wheels
-        path: target/wheels/*.whl
+        name: pyo3_linalg_example-0.1.0-cp36-cp36m-linux_x86_64.whl
+        path: target/wheels/pyo3_linalg_example-0.1.0-cp36-cp36m-linux_x86_64.whl
+
+    - uses: actions/upload-artifact@v2
+      name: "Artifact for Python 3.7"
+      with:
+        name: pyo3_linalg_example-0.1.0-cp37-cp37m-linux_x86_64.whl
+        path: target/wheels/pyo3_linalg_example-0.1.0-cp37-cp37m-linux_x86_64.whl
