@@ -1,4 +1,5 @@
-use ndarray::{ArrayD, ArrayViewD, ArrayViewMutD};
+use ndarray::*;
+use ndarray_linalg::*;
 use numpy::{IntoPyArray, PyArrayDyn};
 use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
 
@@ -25,6 +26,18 @@ fn rust_ext(_py: Python, m: &PyModule) -> PyResult<()> {
         let x = x.as_array();
         let y = y.as_array();
         axpy(a, x, y).into_pyarray(py).to_owned()
+    }
+
+    // wrapper of `axpy`
+    #[pyfn(m, "det")]
+    fn det_py(_py: Python, x: &PyArrayDyn<f64>) -> f64 {
+        let x = x.as_array();
+        if let &[nx, ny] = x.shape() {
+            let x = x.into_shape((nx, ny)).unwrap();
+            x.det().unwrap()
+        } else {
+            panic!("Must be 2D array");
+        }
     }
 
     // wrapper of `mult`
