@@ -28,3 +28,14 @@ Q & A
   Caused by: Your library is not manylinux compliant because it links the following forbidden libraries: ["libgfortran.so.5"]
   ```
   It is not supported yet. Please use `maturin build --manylinux=off`
+
+- Cannot find `libgfortran.so.5` when importing
+  ```
+  ImportError: libgfortran.so.5: cannot open shared object file: No such file or directory
+  ```
+  The compiled wheel does not includes `gfortran` (due to OpenBLAS dependency).
+  You need to install gfotran, e.g.
+  ```
+  sudo apt install gfortran
+  ```
+  or equivalent way.
