@@ -1,0 +1,22 @@
+stages:
+  - build
+
+.build-wheel:
+  stage: build
+  script:
+    - maturin build --manylinux=off
+  artifacts:
+    paths:
+      - target/wheels/*.whl
+
+build-3.6:
+  extends: .build-wheel
+  image: registry.gitlab.com/termoshtt/rust-python/python3.6-rust1.43.0
+
+build-3.7:
+  extends: .build-wheel
+  image: registry.gitlab.com/termoshtt/rust-python/python3.7-rust1.43.0
+
+build-3.8:
+  extends: .build-wheel
+  image: registry.gitlab.com/termoshtt/rust-python/python3.8-rust1.43.0
