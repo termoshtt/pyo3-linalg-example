@@ -1,0 +1,50 @@
+stages:
+  - build
+  - test
+
+.build-wheel:
+  stage: build
+  script:
+    - maturin build --manylinux=off
+  artifacts:
+    paths:
+      - target/wheels/*.whl
+
+build-3.6:
+  extends: .build-wheel
+  image: registry.gitlab.com/termoshtt/rust-python/python3.6-rust1.43.0
+
+build-3.7:
+  extends: .build-wheel
+  image: registry.gitlab.com/termoshtt/rust-python/python3.7-rust1.43.0
+
+build-3.8:
+  extends: .build-wheel
+  image: registry.gitlab.com/termoshtt/rust-python/python3.8-rust1.43.0
+
+.test-wheel:
+  stage: test
+  before_script:
+    # FIXME should be statically linked...
+    - apt update && apt install -y libgfortran5
+  script:
+    - python -m pip install target/wheels/*.whl
+    - python -c "import pyo3_linalg_example"
+
+test-3.6:
+  extends: .test-wheel
+  image: python:3.6-slim
+  dependencies:
+    - build-3.6
+
+test-3.7:
+  extends: .test-wheel
+  image: python:3.7-slim
+  dependencies:
+    - build-3.7
+
+test-3.8:
+  extends: .test-wheel
+  image: python:3.8-slim
+  dependencies:
+    - build-3.8
